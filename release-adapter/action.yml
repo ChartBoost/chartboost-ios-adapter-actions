@@ -6,7 +6,7 @@ runs:
   using: 'composite'
   steps:
   
-    # Check out the repo..
+    # Check out the repo.
     - name: Checkout Branch
       uses: actions/checkout@v3
 
