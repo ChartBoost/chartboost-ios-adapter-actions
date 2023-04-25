@@ -1,6 +1,6 @@
 name: 'Create Release Branch'
 
-description: 'Creates a new adapter release branch making boilerplate changes and opening a PR for it.'
+description: 'Creates a new adapter release branch, validates inputs, applies boilerplate changes, and opens a PR.'
 
 inputs:
   adapter-version:
