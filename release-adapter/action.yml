@@ -24,6 +24,7 @@ runs:
     # Push the podspec.
     - name: Push Podspec
       run: pod trunk push --verbose
+      shell: bash
 
     # Create GitHub release.
     - name: Create Release
