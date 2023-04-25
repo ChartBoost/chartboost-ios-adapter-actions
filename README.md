@@ -1,2 +1,2 @@
-# Chartboost Mediation Scripts
-Repository of common scripts for the Chartboost Mediation Adapter ecosystem.
+# Chartboost Mediation iOS Actions
+Repository of GitHub Actions for the Chartboost Mediation iOS Adapter ecosystem.
