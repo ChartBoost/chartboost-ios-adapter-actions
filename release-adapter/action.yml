@@ -13,7 +13,7 @@ runs:
     # Obtain the new adapter version.
     - name: Obtain Adapter Version
       id: release_version
-      run: echo "version=$(ruby ./scripts/adapter-version.rb)" >> $GITHUB_OUTPUT
+      run: echo "version=$(ruby ${{ github.action_path }}/../scripts/adapter-version.rb)" >> $GITHUB_OUTPUT
       shell: bash
 
     # Push the release tag.

@@ -22,17 +22,17 @@ runs:
 
     # Validate adapter and partner versions are compatible.
     - name: Validate Adapter and Partner Version Match
-      run: ruby ./scripts/validate-adapter-and-partner-versions.rb "${{ inputs.adapter-version }}" "${{ inputs.partner-version }}"
+      run: ruby "${{ github.action_path }}/../scripts/validate-adapter-and-partner-versions.rb ${{ inputs.adapter-version }} ${{ inputs.partner-version }}"
       shell: bash
 
     # Validate adapter version is well-formed and not already released.
     - name: Validate Adapter Version
-      run: ruby ./scripts/validate-new-release-version.rb "${{ inputs.adapter-version }}"
+      run: ruby "${{ github.action_path }}/../scripts/validate-new-release-version.rb ${{ inputs.adapter-version }}"
       shell: bash
 
     # Validate partner version is well-formed.
     - name: Validate Partner Version
-      run: ruby ./scripts/validate-partner-version.rb "${{ inputs.partner-version }}"
+      run: ruby "${{ github.action_path }}/../scripts/validate-partner-version.rb ${{ inputs.partner-version }}"
       shell: bash
 
     # Create and checkout branch
@@ -42,17 +42,17 @@ runs:
 
     # Update version strings in podspec.
     - name: Update Version Strings in Podspec
-      run: ruby ./scripts/update-podspec-versions.rb "${{ inputs.adapter-version }}" "${{ inputs.partner-version }}"
+      run: ruby "${{ github.action_path }}/../scripts/update-podspec-versions.rb ${{ inputs.adapter-version }} ${{ inputs.partner-version }}"
       shell: bash
 
     # Update version string in main adapter class.
     - name: Update Version String in Partner Adapter Class
-      run: ruby ./scripts/update-adapter-class-version.rb "${{ inputs.adapter-version }}"
+      run: ruby "${{ github.action_path }}/../scripts/update-adapter-class-version.rb ${{ inputs.adapter-version }}"
       shell: bash
 
     # Add new changelog entry for the current adapter version.
     - name: Add Changelog Entry
-      run: ruby ./scripts/add-changelog-entry.rb "${{ inputs.adapter-version }}" "${{ inputs.partner-version }}"
+      run: ruby "${{ github.action_path }}/../scripts/add-changelog-entry.rb ${{ inputs.adapter-version }} ${{ inputs.partner-version }}"
       shell: bash
 
     # Commit and push changes.
