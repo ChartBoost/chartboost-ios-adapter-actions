@@ -1,4 +1,4 @@
-name: 'Create Release Branch'
+name: 'Create Adapter Release Branch'
 
 description: 'Creates a new adapter release branch, validates inputs, applies boilerplate changes, and opens a PR.'
 
