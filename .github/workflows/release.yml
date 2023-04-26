@@ -2,16 +2,15 @@
 
 name: 'Release'
 
-inputs:
-  version:
-    type: string
-    description: 'The new version'
-    required: true
-    default: 'v1.0.0'
-
 on:
   # Manual trigger from the Github Actions tab
   workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        description: 'The new version'
+        required: true
+        default: 'v1.0.0'
 
 jobs:
   release:
