@@ -15,6 +15,7 @@ on:
 
 jobs:
   release:
+    runs-on: macos-latest
     steps:
       
     # Check out the repo.
