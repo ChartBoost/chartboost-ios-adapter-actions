@@ -1,0 +1,46 @@
+name: 'Release Adapter'
+
+description: 'Releases a new adapter version.'
+
+inputs:
+  allow-warnings:
+    type: boolean
+    description: 'Indicates if warnings should be allowed when linting the podspec'
+    required: false
+    default: false
+
+runs:
+  using: 'composite'
+  steps:
+  
+    # Check out the repo.
+    - name: Checkout Branch
+      uses: actions/checkout@v3
+      with:
+        token: ${{ env.GITHUB_TOKEN }}
+
+    # Obtain the new adapter version.
+    - name: Obtain Adapter Version
+      id: release_version
+      run: echo "version=$(ruby ${{ github.action_path }}/../scripts/adapter-version.rb)" >> $GITHUB_OUTPUT
+      shell: bash
+
+    # Push the release tag.
+    - name: Tag
+      run: git tag ${{ steps.release_version.outputs.version }} && git push origin ${{ steps.release_version.outputs.version }}
+      shell: bash
+
+    # Push the podspec.
+    - name: Push Podspec
+      run: pod trunk push --verbose ${{ inputs.allow-warnings == 'true' && '--allow-warnings' || '' }}
+      shell: bash
+
+    # Create GitHub release.
+    - name: Create Release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ steps.release_version.outputs.version }}
+        release_name: ${{ steps.release_version.outputs.version }}
+        body: ''
+        draft: false
+        prerelease: false
