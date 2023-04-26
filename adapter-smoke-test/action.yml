@@ -24,5 +24,5 @@ runs:
 
     # Validate the podspec.
     - name: Validate Podspec
-      run: pod lib lint --verbose ${{ inputs.allow-warnings && '--allow-warnings' || '' }}
+      run: pod lib lint --verbose ${{ inputs.allow-warnings == 'true' && '--allow-warnings' || '' }}
       shell: bash
