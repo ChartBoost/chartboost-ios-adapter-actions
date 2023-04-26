@@ -46,6 +46,7 @@ jobs:
       shell: bash
 
     # Create/replace major version tag on the same commit as the new release tag.
+    # This way workflows that use our actions pegged to a @v1 version will automatically get the new version.
     - name: Major Version Tag
       run: git tag -f ${{ steps.major-version.outputs.version }} ${{ inputs.version }} && git push -f origin ${{ steps.major-version.outputs.version }}
       shell: bash
