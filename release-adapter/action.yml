@@ -2,6 +2,13 @@ name: 'Release Adapter'
 
 description: 'Releases a new adapter version.'
 
+inputs:
+  allow-warnings:
+    type: boolean
+    description: 'Indicates if warnings should be allowed when linting the podspec'
+    required: false
+    default: false
+
 runs:
   using: 'composite'
   steps:
@@ -25,7 +32,7 @@ runs:
 
     # Push the podspec.
     - name: Push Podspec
-      run: pod trunk push --verbose
+      run: pod trunk push --verbose ${{ inputs.allow-warnings && '--allow-warnings' || '' }}
       shell: bash
 
     # Create GitHub release.

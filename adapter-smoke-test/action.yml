@@ -2,6 +2,13 @@ name: 'Adapter Smoke Tests'
 
 description: 'Validates changes to an adapter.'
 
+inputs:
+  allow-warnings:
+    type: boolean
+    description: 'Indicates if warnings should be allowed when linting the podspec'
+    required: false
+    default: false
+
 runs:
   using: 'composite'
   steps:
@@ -17,5 +24,5 @@ runs:
 
     # Validate the podspec.
     - name: Validate Podspec
-      run: pod lib lint --verbose
+      run: pod lib lint --verbose ${{ inputs.allow-warnings && '--allow-warnings' || '' }}
       shell: bash

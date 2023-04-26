@@ -5,6 +5,12 @@ Repository of GitHub Actions for the Chartboost Mediation iOS Adapter ecosystem.
 
 Validates changes to an adapter.
 
+### Inputs
+
+| name | type | required | default | discussion |
+| ---- | ---- | ---- | ---- | ---- |
+| allow-warnings | boolean | no | false | Indicates if warnings should be allowed when linting the podspec | 
+
 ### Use example
 
 Add to your GitHub workflow:
@@ -15,6 +21,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: chartboost/chartboost-mediation-ios-actions/adapter-smoke-test@v1
+        with:
+          allow-warnings: true
 ```
 
 ## create-adapter-release-branch
@@ -50,6 +58,12 @@ This action releases a new adapter version.
 
 - A `GITHUB_TOKEN` environment variable with a GitHub token that has permission to push tags and create GitHub releases in the adapter repository.
 - A `COCOAPODS_TRUNK_TOKEN` environment variable with a CocoaPods token that has permission to push new adapter pod versions to trunk.
+
+### Inputs
+
+| name | type | required | default | discussion |
+| ---- | ---- | ---- | ---- | ---- |
+| allow-warnings | boolean | no | false | Indicates if warnings should be allowed when linting the podspec |
 
 ### Use example
 
