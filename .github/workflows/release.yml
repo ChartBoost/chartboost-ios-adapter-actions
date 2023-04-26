@@ -27,7 +27,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GITHUBSERVICETOKEN }}
 
     # Validate version string is well-formed and not already released.
     - name: Validate Version String
