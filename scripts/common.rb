@@ -7,6 +7,9 @@ PODSPEC_PARTNER_REGEX = /spec\.dependency\s*'([^']+)'/
 CHANGELOG_PATH = "CHANGELOG.md"
 ADAPTER_CLASS_PREFIX = "ChartboostMediationAdapter"
 ADAPTER_CLASS_VERSION_REGEX = /^(\s*let adapterVersion\s*=\s*")([^"]+)(".*)$/
+SOURCE_DIR_PATH = "./Source"
+SOURCE_FILE_EXTENSIONS = ['.h', '.m', '.swift']
+SOURCE_FILE_COPYRIGHT_NOTICE = "// Copyright 2022-#{Time.now.year} Chartboost, Inc.\n//\n// Use of this source code is governed by an MIT-style\n// license that can be found in the LICENSE file.\n\n"
 
 ###########
 # PODSPEC #
@@ -117,7 +120,7 @@ def adapter_class_file_path
   partner_name = podspec_name.delete_prefix ADAPTER_CLASS_PREFIX
 
   # Obtain the Adapter file path
-  path = Dir.glob("./Source/#{partner_name}Adapter.swift").first
+  path = Dir.glob("#{SOURCE_DIR_PATH}/#{partner_name}Adapter.swift").first
   fail unless !path.nil?
 
   # Return value
@@ -135,4 +138,24 @@ def adapter_class_version
 
   # Return value
   version
+end
+
+################
+# SOURCE FILES #
+################
+
+# Iterates over all source files.
+def for_all_source_files()
+  Dir.glob("#{SOURCE_DIR_PATH}/**/*").each do |file_path|
+    # Skip if not a file or if it doesn't have one of the known extensions.
+    next if File.directory?(file_path)
+    next unless SOURCE_FILE_EXTENSIONS.include? File.extname(file_path)
+
+    File.open(file_path, 'r') do |file|
+      contents = file.read
+
+      # Execute the block
+      yield(file_path, contents)
+    end
+  end
 end
