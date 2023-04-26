@@ -27,7 +27,7 @@ runs:
 
     # Validate adapter version is well-formed and not already released.
     - name: Validate Adapter Version
-      run: ruby "${{ github.action_path }}/../scripts/validate-new-release-version.rb" "${{ inputs.adapter-version }}"
+      run: ruby "${{ github.action_path }}/../scripts/validate-new-adapter-release-version.rb" "${{ inputs.adapter-version }}"
       shell: bash
 
     # Validate partner version is well-formed.
