@@ -37,5 +37,6 @@ jobs:
 
     # Run unit tests
     - name: Unit Tests
-      run: ruby ./scripts/tests/run-all-tests.rb
+      run: ruby ./run-all-tests.rb
       shell: bash
+      working-directory: ./scripts/tests/
