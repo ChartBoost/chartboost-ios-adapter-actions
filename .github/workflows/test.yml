@@ -34,3 +34,8 @@ jobs:
     # Validate the actions yml syntax.
     - name: Validate Actions YAML syntax
       run: yamllint -c .yamllint.yml '../../**/*.yml'
+
+    # Run unit tests
+    - name: Unit Tests
+      run: ruby ./scripts/tests/run-all-tests.rb
+      shell: bash

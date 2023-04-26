@@ -7,7 +7,7 @@ abort "Missing argument. Requires: version string." unless ARGV.count == 1
 new_version = ARGV[0]
 
 # Validate the version string
-abort "Validation failed: #{version} is not a semantic release version." unless new_version.match?(SEMANTIC_VERSION_REGEX)
+abort "Validation failed: #{new_version} is not a semantic release version." unless new_version.match?(SEMANTIC_VERSION_REGEX)
 
 # Check if a tag for that version already exists in the remote
 # This command:
