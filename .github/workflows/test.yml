@@ -9,6 +9,8 @@ on:
       - main
   # Manual trigger from the Github Actions tab
   workflow_dispatch:
+  # Triggered by another workflow
+  workflow_call:
 
 jobs:
   test:
