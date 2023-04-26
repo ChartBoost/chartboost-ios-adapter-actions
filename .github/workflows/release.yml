@@ -1,6 +1,6 @@
-name: 'Release'
+# Releases a new version of the actions by pushing a tag.
 
-description: 'Releases a new version of the actions by pushing a tag.'
+name: 'Release'
 
 inputs:
   version:

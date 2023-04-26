@@ -1,6 +1,6 @@
-name: 'Test'
+# Validates changes to all the actions.
 
-description: 'Validates changes to all the actions.'
+name: 'Test'
 
 on:
   # On pull requests to main
