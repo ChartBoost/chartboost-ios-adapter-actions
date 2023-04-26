@@ -9,7 +9,7 @@ Validates changes to an adapter.
 
 | name | type | required | default | discussion |
 | ---- | ---- | ---- | ---- | ---- |
-| allow-warnings | boolean | no | false | Indicates if warnings should be allowed when linting the podspec | 
+| `allow-warnings` | boolean | no | false | Indicates if warnings should be allowed when linting the podspec | 
 
 ### Use example
 
@@ -63,7 +63,7 @@ This action releases a new adapter version.
 
 | name | type | required | default | discussion |
 | ---- | ---- | ---- | ---- | ---- |
-| allow-warnings | boolean | no | false | Indicates if warnings should be allowed when linting the podspec |
+| `allow-warnings` | boolean | no | false | Indicates if warnings should be allowed when linting the podspec |
 
 ### Use example
 
