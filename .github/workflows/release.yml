@@ -31,13 +31,13 @@ jobs:
 
     # Validate version string is well-formed and not already released.
     - name: Validate Version String
-      run: ruby ./scripts/validate-new-actions-release-version.rb "${{ inputs.version }}"
+      run: ruby ./scripts/internal/validate-new-actions-release-version.rb "${{ inputs.version }}"
       shell: bash
 
     # Obtain the corresponding major version.
     - name: Obtain Major Version
       id: major-version
-      run: echo "version=$(ruby ./scripts/major-version-tag-name.rb ${{ inputs.version }})" >> $GITHUB_OUTPUT
+      run: echo "version=$(ruby ./scripts/internal/major-version-tag-name.rb ${{ inputs.version }})" >> $GITHUB_OUTPUT
       shell: bash
 
     # Push the release tag.
