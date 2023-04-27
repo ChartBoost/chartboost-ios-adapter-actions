@@ -50,3 +50,13 @@ jobs:
     - name: Major Version Tag
       run: git tag -f ${{ steps.major-version.outputs.version }} ${{ inputs.version }} && git push -f origin ${{ steps.major-version.outputs.version }}
       shell: bash
+
+    # Create GitHub release.
+    - name: Create Release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ inputs.version }}
+        release_name: ${{ inputs.version }}
+        body: ''
+        draft: false
+        prerelease: false
