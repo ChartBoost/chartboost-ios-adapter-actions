@@ -1,0 +1,50 @@
+# Validates changes to all the actions.
+
+name: 'Test'
+
+on:
+  # On pull requests to main
+  pull_request:
+    branches:
+      - main
+  # Manual trigger from the Github Actions tab
+  workflow_dispatch:
+  # Triggered by another workflow
+  workflow_call:
+
+jobs:
+  validate-actions-yml:
+    runs-on: macos-latest
+    steps:
+
+    # Check out the repo.
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Set up Node.js.
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+
+    # Install yaml-lint.
+    - name: Install yaml-lint
+      run: npm install -g yaml-lint
+
+    # Validate the actions yml syntax.
+    - name: Validate Actions YAML syntax
+      run: yamllint -c .yamllint.yml '../../**/*.yml'
+
+  validate-ruby-scripts:
+    runs-on: macos-latest
+    steps:
+
+    # Check out the repo.
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    # Run unit tests
+    - name: Unit Tests
+      run: ruby ./run-all-tests.rb
+      shell: bash
+      working-directory: ./scripts/tests/

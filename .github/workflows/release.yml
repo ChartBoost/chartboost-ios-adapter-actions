@@ -1,0 +1,62 @@
+# Releases a new version of the actions by pushing a tag.
+
+name: 'Release'
+
+on:
+  # Manual trigger from the Github Actions tab
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        description: 'The new version'
+        required: true
+        default: 'v1.0.0'
+
+jobs:
+
+  # Run tests.
+  test:
+    uses: ./.github/workflows/test.yml
+
+  release:
+    runs-on: macos-latest
+    needs: test
+    steps:
+      
+    # Check out the repo.
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUBSERVICETOKEN }}
+
+    # Validate version string is well-formed and not already released.
+    - name: Validate Version String
+      run: ruby ./scripts/internal/validate-new-actions-release-version.rb "${{ inputs.version }}"
+      shell: bash
+
+    # Obtain the corresponding major version.
+    - name: Obtain Major Version
+      id: major-version
+      run: echo "version=$(ruby ./scripts/internal/major-version-tag-name.rb ${{ inputs.version }})" >> $GITHUB_OUTPUT
+      shell: bash
+
+    # Push the release tag.
+    - name: Release Tag
+      run: git tag ${{ inputs.version }} && git push origin ${{ inputs.version }}
+      shell: bash
+
+    # Create/replace major version tag on the same commit as the new release tag.
+    # This way workflows that use our actions pegged to a @v1 version will automatically get the new version.
+    - name: Major Version Tag
+      run: git tag -f ${{ steps.major-version.outputs.version }} ${{ inputs.version }} && git push -f origin ${{ steps.major-version.outputs.version }}
+      shell: bash
+
+    # Create GitHub release.
+    - name: Create Release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ inputs.version }}
+        release_name: ${{ inputs.version }}
+        body: ''
+        draft: false
+        prerelease: false
