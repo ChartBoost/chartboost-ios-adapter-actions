@@ -55,9 +55,26 @@ runs:
       run: ruby "${{ github.action_path }}/../scripts/adapters/add-changelog-entry.rb" "${{ inputs.adapter-version }}" "${{ inputs.partner-version }}"
       shell: bash
 
-    # Commit and push changes.
+    # Commit changes to podspec, changelog, and main adapter class file.
+    - name: Commit Changes
+      run: git add *.podspec CHANGELOG.md Source/*Adapter.swift && git commit -m "[AUTO-GENERATED] Update version to ${{ inputs.adapter-version }}"
+      shell: bash
+
+    # Update copyright headers for all files.
+    - name: Update Copyright Headers
+      id: copyright-headers
+      run: echo "files=$(ruby ${{ github.action_path }}/../scripts/adapters/update-copyright-headers.rb)" >> $GITHUB_OUTPUT
+      shell: bash
+
+    # Commit changes to all source files.
+    - name: Commit Changes
+      if: ${{ steps.copyright-headers.outputs.files != '' }}
+      run: git add ${{ steps.copyright-headers.outputs.files }} && git commit -m "[AUTO-GENERATED] Update copyright headers"
+      shell: bash
+
+    # Push changes.
     - name: Push Changes
-      run: git add *.podspec CHANGELOG.md Source/*Adapter.swift && git commit -m "[AUTO-GENERATED] Update version to ${{ inputs.adapter-version }}" && git push -u origin "release/${{ inputs.adapter-version }}"
+      run: git push -u origin "release/${{ inputs.adapter-version }}"
       shell: bash
 
     # Open a pull request from the new branch to main.

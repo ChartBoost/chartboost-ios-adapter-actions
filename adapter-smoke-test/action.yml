@@ -22,6 +22,11 @@ runs:
       run: ruby "${{ github.action_path }}/../scripts/adapters/validate-adapter-version.rb"
       shell: bash
 
+    # Check that all source files have the proper copyright headers.
+    - name: Validate Copyright Headers
+      run: ruby "${{ github.action_path }}/../scripts/adapters/validate-copyright-headers.rb"
+      shell: bash
+
     # Validate the podspec.
     - name: Validate Podspec
       run: pod lib lint --verbose ${{ inputs.allow-warnings == 'true' && '--allow-warnings' || '' }}
