@@ -141,7 +141,7 @@ end
 # The path to the main adapter class file.
 def adapter_class_file_path
   # Obtain the partner name
-  partner_name = podspec_name.delete_prefix ADAPTER_CLASS_PREFIX
+  partner_name = podspec_name.delete_prefix ADAPTER_CLASS_PREFIX()
 
   # Obtain the Adapter file path
   path = Dir.glob("#{SOURCE_DIR_PATH}/#{partner_name}Adapter.swift").first
@@ -157,7 +157,7 @@ def adapter_class_version
   text = read_adapter_class()
 
   # Obtain the adapter version from the file
-  version = text.match(ADAPTER_CLASS_VERSION_REGEX).captures[1]
+  version = text.match(ADAPTER_CLASS_VERSION_REGEX()).captures[1]
   fail unless !version.nil?
 
   # Return value
