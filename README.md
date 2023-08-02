@@ -1,5 +1,10 @@
-# Chartboost Mediation iOS Actions
-Repository of GitHub Actions for the Chartboost Mediation iOS Adapter ecosystem.
+# Chartboost iOS Adapter Actions
+Repository of GitHub Actions for the Chartboost Mediation iOS Adapter and Chartboost Core iOS Adapter ecosystems.
+
+All actions accept an optional `CHARTBOOST_PLATFORM` environment variable to indicate the platform to which the adapter belongs.
+
+Supported values are: `Mediation` and `Core`.
+When no value is provided, `Mediation` is assumed.
 
 ## adapter-smoke-test
 
@@ -20,7 +25,7 @@ jobs:
   validate-podspec:
     runs-on: macos-latest
     steps:
-      - uses: chartboost/chartboost-mediation-ios-actions/adapter-smoke-test@v1
+      - uses: chartboost/chartboost-ios-adapter-actions/adapter-smoke-test@v1
         with:
           allow-warnings: true
 ```
@@ -44,7 +49,7 @@ env:
 jobs:
   create-release-branch:
     steps:
-      - uses: chartboost/chartboost-mediation-ios-actions/create-adapter-release-branch@v1
+      - uses: chartboost/chartboost-ios-adapter-actions/create-adapter-release-branch@v1
         with:
           adapter-version: "4.5.3.0.0"
           partner-version: "~> 5.3.0"
@@ -77,5 +82,5 @@ env:
 jobs:
   release-adapter:
     steps:
-      - uses: chartboost/chartboost-mediation-ios-actions/release-adapter@v1
+      - uses: chartboost/chartboost-ios-adapter-actions/release-adapter@v1
 ``` 

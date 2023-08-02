@@ -5,11 +5,35 @@ PODSPEC_VERSION_REGEX = /^(\s*spec\.version\s*=\s*')([0-9]+(?>\.[0-9]+){4,5})('\
 PODSPEC_NAME_REGEX = /^\s*spec\.name\s*=\s*'([^']+)'\s*$/
 PODSPEC_PARTNER_REGEX = /spec\.dependency\s*'([^']+)'/
 CHANGELOG_PATH = "CHANGELOG.md"
-ADAPTER_CLASS_PREFIX = "ChartboostMediationAdapter"
-ADAPTER_CLASS_VERSION_REGEX = /^(\s*let adapterVersion\s*=\s*")([^"]+)(".*)$/
+ADAPTER_CLASS_PREFIX_MEDIATION = "ChartboostMediationAdapter"
+ADAPTER_CLASS_PREFIX_CORE = "ChartboostCoreConsentAdapter"
+ADAPTER_CLASS_VERSION_REGEX_MEDIATION = /^(\s*let adapterVersion\s*=\s*")([^"]+)(".*)$/
+ADAPTER_CLASS_VERSION_REGEX_CORE = /^(\s*(?>public)?\s*let moduleVersion\s*=\s*")([^"]+)(".*)$/
 SOURCE_DIR_PATH = "./Source"
 SOURCE_FILE_EXTENSIONS = ['.h', '.m', '.swift']
 SOURCE_FILE_COPYRIGHT_NOTICE = "// Copyright 2022-#{Time.now.year} Chartboost, Inc.\n//\n// Use of this source code is governed by an MIT-style\n// license that can be found in the LICENSE file.\n\n"
+
+# Returns a platform-specific ADAPTER_CLASS_PREFIX constant.
+def ADAPTER_CLASS_PREFIX
+  platform = ENV['CHARTBOOST_PLATFORM']
+  if platform == 'Core'
+    return ADAPTER_CLASS_PREFIX_CORE
+  else
+    # fallback to 'Mediation'
+    return ADAPTER_CLASS_PREFIX_MEDIATION
+  end
+end
+
+# Returns a platform-specific ADAPTER_CLASS_VERSION_REGEX constant.
+def ADAPTER_CLASS_VERSION_REGEX
+  platform = ENV['CHARTBOOST_PLATFORM']
+  if platform == 'Core'
+    return ADAPTER_CLASS_VERSION_REGEX_CORE
+  else
+    # fallback to 'Mediation'
+    return ADAPTER_CLASS_VERSION_REGEX_MEDIATION
+  end
+end
 
 ###########
 # PODSPEC #

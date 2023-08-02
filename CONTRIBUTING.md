@@ -1,3 +1,3 @@
-# Contributing to Chartboost Mediation iOS Actions
+# Contributing to Chartboost iOS Adapter Actions
 
-Contributions to the Chartboost Mediation iOS Actions repository are not accepted. The repository is provided as-is for usage for usage with the open source Chartboost Mediation Adapter ecosystem.
+Contributions to the Chartboost iOS Adapter Actions repository are not accepted. The repository is provided as-is for usage for usage with the open source Chartboost Mediation Adapter and Chartboost Core Adapter ecosystems.
