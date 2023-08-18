@@ -32,18 +32,7 @@ runs:
       run: pod lib lint --verbose ${{ inputs.allow-warnings == 'true' && '--allow-warnings' || '' }}
       shell: bash
 
-    # Fix the CB SDK version in the podspec to the lowest one compatible with the adapter.
-    - name: Lower CB SDK Dependency Version
-      run: ruby "${{ github.action_path }}/../scripts/adapters/fix-podspec-cb-sdk-version-to-min.rb"
-      shell: bash
-
     # Ensure adapter backward compatibility with the first minor version of the CB SDK major series.
     - name: Ensure Backward Compatibility
-      run: pod lib lint --verbose ${{ inputs.allow-warnings == 'true' && '--allow-warnings' || '' }}
-      shell: bash
-
-    # Discard changes made to the podspec file
-    - name: Discard Podspec Changes
-      if: always()
-      run: ruby "${{ github.action_path }}/../scripts/adapters/discard-podspec-changes.rb"
+      run: ruby "${{ github.action_path }}/../scripts/adapters/validate-backward-compatibility.rb"
       shell: bash
