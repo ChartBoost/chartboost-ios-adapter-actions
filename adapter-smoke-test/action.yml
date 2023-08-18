@@ -31,3 +31,8 @@ runs:
     - name: Validate Podspec
       run: pod lib lint --verbose ${{ inputs.allow-warnings == 'true' && '--allow-warnings' || '' }}
       shell: bash
+
+    # Ensure adapter backward compatibility with the first minor version of the CB SDK major series.
+    - name: Ensure Backward Compatibility
+      run: ruby "${{ github.action_path }}/../scripts/adapters/validate-backward-compatibility.rb"
+      shell: bash

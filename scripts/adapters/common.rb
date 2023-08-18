@@ -1,5 +1,7 @@
 # Common definitions used by other scripts.
 
+PODSPEC_CB_SDK_REGEX_CORE = /(spec\.dependency\s*'ChartboostCoreSDK',\s*')\~>\s*(\d+\.\d+(\.\d+)?')/
+PODSPEC_CB_SDK_REGEX_MEDIATION = /(spec\.dependency\s*'ChartboostMediationSDK',\s*')\~>\s*(\d+\.\d+(\.\d+)?')/
 PODSPEC_PATH_PATTERN = "*.podspec"
 PODSPEC_VERSION_REGEX = /^(\s*spec\.version\s*=\s*')([0-9]+(?>\.[0-9]+){4,5})('\s*)$/
 PODSPEC_NAME_REGEX = /^\s*spec\.name\s*=\s*'([^']+)'\s*$/
@@ -32,6 +34,17 @@ def ADAPTER_CLASS_VERSION_REGEX
   else
     # fallback to 'Mediation'
     return ADAPTER_CLASS_VERSION_REGEX_MEDIATION
+  end
+end
+
+# Returns a platform-specific PODSPEC_CB_SDK_REGEX constant.
+def PODSPEC_CB_SDK_REGEX
+  platform = ENV['CHARTBOOST_PLATFORM']
+  if platform == 'Core'
+    return PODSPEC_CB_SDK_REGEX_CORE
+  else
+    # fallback to 'Mediation'
+    return PODSPEC_CB_SDK_REGEX_MEDIATION
   end
 end
 
