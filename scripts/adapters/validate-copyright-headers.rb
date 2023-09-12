@@ -5,5 +5,8 @@ require_relative 'common'
 # Iterate over all the files in the source directory
 for_all_source_files do |file_path, contents|
   # Fail some file does not start with the copyright notice
-  abort "Validation failed: #{file_path} does not have a proper copyright notice header." unless contents.start_with?(SOURCE_FILE_COPYRIGHT_NOTICE)
+  abort "Validation failed: #{file_path} does not have a proper copyright notice header." unless (
+    contents.match(SOURCE_FILE_COPYRIGHT_NOTICE_FROM_CURRENT_YEAR_ONLY_REGEX) ||
+    contents.match(SOURCE_FILE_COPYRIGHT_NOTICE_FROM_AND_CURRENT_YEARS_REGEX)
+  )
 end

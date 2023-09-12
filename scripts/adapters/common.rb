@@ -13,7 +13,15 @@ ADAPTER_CLASS_VERSION_REGEX_MEDIATION = /^(\s*let adapterVersion\s*=\s*")([^"]+)
 ADAPTER_CLASS_VERSION_REGEX_CORE = /^(\s*(?>public)?\s*let moduleVersion\s*=\s*")([^"]+)(".*)$/
 SOURCE_DIR_PATH = "./Source"
 SOURCE_FILE_EXTENSIONS = ['.h', '.m', '.swift']
-SOURCE_FILE_COPYRIGHT_NOTICE = "// Copyright 2022-#{Time.now.year} Chartboost, Inc.\n//\n// Use of this source code is governed by an MIT-style\n// license that can be found in the LICENSE file.\n\n"
+
+SOURCE_FILE_COPYRIGHT_NOTICE_PART_1_OF_2_CURRENT_YEAR_ONLY = "// Copyright #{Time.now.year} Chartboost, Inc.\n"
+SOURCE_FILE_COPYRIGHT_NOTICE_PART_2_OF_2 = "//\n// Use of this source code is governed by an MIT-style\n// license that can be found in the LICENSE file.\n\n"
+SOURCE_FILE_COPYRIGHT_NOTICE_TIME_SPAN_DASH_INDEX = 17 # the "-" character between the FROM year and the TO year
+
+SOURCE_FILE_COPYRIGHT_NOTICE_FROM_CURRENT_YEAR_ONLY_REGEX = /#{SOURCE_FILE_COPYRIGHT_NOTICE_PART_1_OF_2_CURRENT_YEAR_ONLY}#{SOURCE_FILE_COPYRIGHT_NOTICE_PART_2_OF_2}/
+SOURCE_FILE_COPYRIGHT_NOTICE_FROM_YEAR_ONLY_REGEX = /\/\/ Copyright 20[0-9][0-9] Chartboost, Inc.\n#{SOURCE_FILE_COPYRIGHT_NOTICE_PART_2_OF_2}/
+SOURCE_FILE_COPYRIGHT_NOTICE_FROM_AND_CURRENT_YEARS_REGEX = /\/\/ Copyright 20[0-9][0-9]-#{Time.now.year} Chartboost, Inc.\n#{SOURCE_FILE_COPYRIGHT_NOTICE_PART_2_OF_2}/
+SOURCE_FILE_COPYRIGHT_NOTICE_FROM_AND_TO_YEARS_REGEX = /\/\/ Copyright 20[0-9][0-9]-20[0-9][0-9] Chartboost, Inc.\n#{SOURCE_FILE_COPYRIGHT_NOTICE_PART_2_OF_2}/
 
 # Returns a platform-specific ADAPTER_CLASS_PREFIX constant.
 def ADAPTER_CLASS_PREFIX
