@@ -19,6 +19,6 @@ changelog = read_changelog()
 
 # Add the new entry right before the last one, if the entry does not already exist for this version
 if !changelog.include? "### #{adapter_version}"
-  changelog = changelog.sub("###", "### #{adapter_version}\n- This version of the adapters has been certified with #{partner_sdk_name} #{partner_version}.\n\n###")
+  changelog = changelog.sub("###", "### #{adapter_version}\n- This version of the adapter has been certified with #{partner_sdk_name} #{partner_version}.\n\n###")
   write_changelog(changelog)
 end
