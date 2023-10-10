@@ -113,6 +113,20 @@ def podspec_partner_sdk_name
   return partner_sdk
 end
 
+# Returns the version of the Chartboost SDK dependency in the podspec.
+def podspec_cb_sdk_version
+  # Obtain the podspec
+  text = read_podspec()
+
+  # Obtain the Chartboost SDK version from the podspec
+  match = text.match(PODSPEC_CB_SDK_REGEX())
+  fail unless !match.nil?
+  sdk_version = match[2]
+
+  # Return value
+  return sdk_version
+end
+
 #############
 # CHANGELOG #
 #############
