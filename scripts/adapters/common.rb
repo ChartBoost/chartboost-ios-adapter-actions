@@ -13,7 +13,6 @@ ADAPTER_CLASS_VERSION_REGEX_MEDIATION = /^(\s*let adapterVersion\s*=\s*")([^"]+)
 ADAPTER_CLASS_VERSION_REGEX_CORE = /^(\s*(?>public)?\s*let moduleVersion\s*=\s*")([^"]+)(".*)$/
 SOURCE_DIR_PATH = "./Source"
 SOURCE_FILE_EXTENSIONS = ['.h', '.m', '.swift']
-SOURCE_FILE_COPYRIGHT_NOTICE = "// Copyright 2022-#{Time.now.year} Chartboost, Inc.\n//\n// Use of this source code is governed by an MIT-style\n// license that can be found in the LICENSE file.\n\n"
 
 # Returns a platform-specific ADAPTER_CLASS_PREFIX constant.
 def ADAPTER_CLASS_PREFIX
@@ -46,6 +45,10 @@ def PODSPEC_CB_SDK_REGEX
     # fallback to 'Mediation'
     return PODSPEC_CB_SDK_REGEX_MEDIATION
   end
+end
+
+def SOURCE_FILE_COPYRIGHT_NOTICE
+  "// Copyright #{year_of_first_remote_commit}-#{Time.now.year} Chartboost, Inc.\n//\n// Use of this source code is governed by an MIT-style\n// license that can be found in the LICENSE file.\n\n"
 end
 
 ###########
@@ -209,4 +212,20 @@ def for_all_source_files()
       yield(file_path, contents)
     end
   end
+end
+
+#######
+# GIT #
+#######
+
+# Obtains the year of the first commit in the remote.
+def year_of_first_remote_commit
+  # Fetch from the remote repository silently
+  `git fetch -q origin main 2>/dev/null`
+
+  # Extract the commit year from the oldest commit
+  commit_year = `git log origin/main --reverse --format=%cd --date=format:%Y | head -1`.strip
+
+  # Return the value
+  commit_year
 end
