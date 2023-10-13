@@ -221,11 +221,10 @@ end
 
 # Obtains the year of the first commit in the remote.
 def year_of_first_remote_commit
-    puts "remote:"
-   puts `git remote get-url origin`
-
   # Fetch from the remote repository silently
-  `git fetch -q origin main 2>/dev/null`
+  # --unshallow is needed to make sure we fetch all the commits, since the repo may have been
+  # cloned with a limited depth (shallow clone)
+  `git fetch --unshallow -q origin main 2>/dev/null`
 
   # Extract the commit year from the oldest commit
   commit_year = `git log origin/main --reverse --format=%cd --date=format:%Y | head -1`.strip
