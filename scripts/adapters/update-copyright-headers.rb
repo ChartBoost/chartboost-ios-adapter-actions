@@ -3,7 +3,6 @@
 require_relative 'common'
 require 'tempfile'
 
-COMMENT_BLOCK_AT_BEGINNING_OF_FILE_REGEX = /^(?:(?>\/\/[^\n]*\n)+(?>\n?))/
 EMPTY_LINES_AT_BEGINNING_OF_FILE_REGEX = /\A(\n|\s)*/
 
 # Keep a list of modified files to output at the end
