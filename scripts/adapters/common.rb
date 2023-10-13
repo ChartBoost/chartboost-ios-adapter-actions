@@ -1,5 +1,6 @@
 # Common definitions used by other scripts.
 
+COMMENT_BLOCK_AT_BEGINNING_OF_FILE_REGEX = /\A(?:(?>\/\/[^\n]*\n)+(?>\n?))/
 PODSPEC_CB_SDK_REGEX_CORE = /(spec\.dependency\s*'ChartboostCoreSDK',\s*')\~>\s*(\d+\.\d+(\.\d+)?')/
 PODSPEC_CB_SDK_REGEX_MEDIATION = /(spec\.dependency\s*'ChartboostMediationSDK',\s*')\~>\s*(\d+\.\d+(\.\d+)?')/
 PODSPEC_PATH_PATTERN = "*.podspec"
