@@ -221,6 +221,8 @@ end
 
 # Obtains the year of the first commit in the remote.
 def year_of_first_remote_commit
+    `git remote get-url origin`
+    
   # Fetch from the remote repository silently
   `git fetch -q origin main 2>/dev/null`
 
