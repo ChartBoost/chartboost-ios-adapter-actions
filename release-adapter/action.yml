@@ -25,6 +25,11 @@ runs:
       run: echo "version=$(ruby ${{ github.action_path }}/../scripts/adapters/adapter-version.rb)" >> $GITHUB_OUTPUT
       shell: bash
 
+    # Validate release.
+    - name: Validate Release
+      run: ruby "${{ github.action_path }}/../scripts/adapters/validate-release.rb ${{ steps.release_version.outputs.version }}"
+      shell: bash
+
     # Push the release tag.
     - name: Tag
       run: git tag ${{ steps.release_version.outputs.version }} && git push origin ${{ steps.release_version.outputs.version }}
