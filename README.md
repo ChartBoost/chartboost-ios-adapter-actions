@@ -6,6 +6,8 @@ All actions accept an optional `CHARTBOOST_PLATFORM` environment variable to ind
 Supported values are: `Mediation` and `Core`.
 When no value is provided, `Mediation` is assumed.
 
+When a change is made to any of the actions or scripts, a new version of the actions will need to be released with the [release](https://github.com/ChartBoost/chartboost-ios-adapter-actions/actions/workflows/release.yml) workflow. Bug fixes can be made in a patch version, non-breaking improvements can be made in a minor version, and breaking changes can be made in a major version.
+
 ## adapter-smoke-test
 
 Validates changes to an adapter.
