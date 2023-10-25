@@ -27,7 +27,7 @@ runs:
 
     # Validate release.
     - name: Validate Release
-      run: ruby "${{ github.action_path }}/../scripts/adapters/validate-release.rb ${{ steps.release_version.outputs.version }}"
+      run: ruby "${{ github.action_path }}/../scripts/adapters/validate-release.rb" "${{ steps.release_version.outputs.version }}"
       shell: bash
 
     # Push the release tag.
