@@ -27,6 +27,11 @@ runs:
       run: ruby "${{ github.action_path }}/../scripts/adapters/validate-copyright-headers.rb"
       shell: bash
 
+    # Check that the changelog contains an entry for the adapter version.
+    - name: Validate Changelog
+      run: ruby "${{ github.action_path }}/../scripts/adapters/validate-changelog.rb"
+      shell: bash
+
     # Validate the podspec.
     - name: Validate Podspec
       run: pod lib lint --verbose ${{ inputs.allow-warnings == 'true' && '--allow-warnings' || '' }}
