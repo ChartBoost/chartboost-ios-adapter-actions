@@ -16,6 +16,8 @@ runs:
       # Check out the repo.
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+        token: ${{ env.GITHUB_TOKEN }}
 
     # Check that the adapter version in the podpsec and in the PartnerAdapter Swift implementation are the same.
     - name: Validate Adapter and Podspec Version Match
