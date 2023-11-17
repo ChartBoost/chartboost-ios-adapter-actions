@@ -17,7 +17,9 @@ runs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        token: ${{ env.GITHUB_TOKEN }}
+        # The env variable might be provided by the release-adapter action, but it may not be available if this
+        # is called as a standalone action. In that case we use the checkout action's default value for this parameter.
+        token: ${{ env.GITHUB_TOKEN || github.token }}
 
     # Check that the adapter version in the podpsec and in the PartnerAdapter Swift implementation are the same.
     - name: Validate Adapter and Podspec Version Match
