@@ -18,7 +18,8 @@ partner_sdk_name = podspec_partner_sdk_name()
 changelog = read_changelog()
 
 # Add the new entry right before the last one, if the entry does not already exist for this version
-if !changelog.include? "### #{adapter_version}"
-  changelog = changelog.sub("###", "### #{adapter_version}\n- This version of the adapter has been certified with #{partner_sdk_name} #{partner_version}.\n\n###")
+entry_header = changelog_entry_header(adapter_version)
+if !changelog.include? entry_header
+  changelog = changelog.sub(CHANGELOG_ENTRY_HEADER_PREFIX, "#{entry_header}\n- This version of the adapter has been certified with #{partner_sdk_name} #{partner_version}.\n\n###")
   write_changelog(changelog)
 end

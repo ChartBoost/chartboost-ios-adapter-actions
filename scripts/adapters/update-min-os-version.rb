@@ -44,6 +44,15 @@ if partner_min_os_version != current_adapter_version
   # Write the changes
   write_readme(readme)
   modified_files.append(readme_file_path)
+
+  # Read the changelog file
+  changelog = read_changelog()
+  # Add a note to the corresponding entry
+  entry_header = changelog_entry_header(podspec_version)
+  changelog = changelog.sub(entry_header, "#{entry_header}\n- The minimum OS version required is now iOS #{partner_min_os_version}.")
+  # Write the changes
+  write_changelog(changelog)
+  modified_files.append(CHANGELOG_PATH)
 end
 
 # Output the list of modified files
