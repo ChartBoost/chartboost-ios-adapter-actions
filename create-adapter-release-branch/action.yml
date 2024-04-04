@@ -20,13 +20,12 @@ runs:
     - name: Checkout Branch
       uses: actions/checkout@v3
 
-    # Set up Ruby and gems
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7
-        bundler-cache: true
-        working-directory: "${{ github.action_path }}/.." # Specify the path to the actions root directory where the Gemfile is
+    # Install gemfile dependencies
+    - name: Install gemfile dependencies
+      run: bundle install
+      shell: bash
+      env:
+        BUNDLE_GEMFILE: "${{ github.action_path }}/../Gemfile"
 
     # Validate adapter and partner versions are compatible.
     - name: Validate Adapter and Partner Version Match
