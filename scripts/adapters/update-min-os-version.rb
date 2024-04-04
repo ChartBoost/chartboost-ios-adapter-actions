@@ -7,7 +7,11 @@ require 'json'
 def min_os_version(pod_name, pod_version)
   # Use the `pod spec cat` command to get the podspec as JSON
   podspec_json = `pod spec cat #{pod_name} --version=#{pod_version}`
-  podspec = JSON.parse(podspec_json)
+  begin
+    podspec = JSON.parse(podspec_json)
+  rescue => error
+    abort "JSON parsing failed. Error: #{error.message}. Invalid JSON: '#{podspec_json}'"
+  end
   
   # Extract the platform information; assuming iOS here
   min_os_version = podspec['platforms']['ios']
