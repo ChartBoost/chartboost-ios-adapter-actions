@@ -7,7 +7,10 @@ require 'open3'
 # Function to obtain the min OS version info from the partner podspec
 def min_os_version(pod_name, pod_version)
   # Update the pod repos to ensure the latest info is available
-  `pod repo update`
+  stdout_str, stderr_str, status = Open3.capture3('pod', 'repo', 'update')
+  unless status.success?
+    abort "`pod repo update` error: #{stdout_str} #{stderr_str}"
+  end
 
   # Use the `pod spec cat` command to get the podspec as JSON
   stdout_str, stderr_str, status = Open3.capture3('pod', 'spec', 'cat', pod_name, "--version=#{pod_version}")
