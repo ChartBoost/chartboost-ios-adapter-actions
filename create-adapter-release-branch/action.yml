@@ -20,13 +20,6 @@ runs:
     - name: Checkout Branch
       uses: actions/checkout@v3
 
-    # Install gemfile dependencies
-    - name: Install gemfile dependencies
-      run: bundle install
-      shell: bash
-      env:
-        BUNDLE_GEMFILE: "${{ github.action_path }}/../Gemfile"
-
     # Validate adapter and partner versions are compatible.
     - name: Validate Adapter and Partner Version Match
       run: ruby "${{ github.action_path }}/../scripts/adapters/validate-adapter-and-partner-versions.rb" "${{ inputs.adapter-version }}" "${{ inputs.partner-version }}"

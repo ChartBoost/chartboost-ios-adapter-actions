@@ -7,17 +7,10 @@ require 'open3'
 # Function to obtain the min OS version info from the partner podspec
 def min_os_version(pod_name, pod_version)
 
-  # Attempt to add the trunk repo explicitly
-  stdout_str, stderr_str, status = Open3.capture3('pod', 'repo', 'add-cdn', 'trunk', 'https://cdn.cocoapods.org')
-  unless status.success?
-    abort "`pod repo add trunk` error: #{stdout_str} #{stderr_str}"
-  end
-
-  stdout_str, stderr_str, status = Open3.capture3('pod', 'repo', 'update')
-  unless status.success?
-    abort "`pod repo update` error: #{stdout_str} #{stderr_str}"
-  end
-
+  # Update cocoapods repos to ensure the local info is up to date
+  `pod repo add-cdn trunk https://cdn.cocoapods.org`
+  `pod repo update`
+  
   # Use the `pod spec cat` command to get the podspec as JSON
   stdout_str, stderr_str, status = Open3.capture3('pod', 'spec', 'cat', pod_name, "--version=#{pod_version}")
   unless status.success?
