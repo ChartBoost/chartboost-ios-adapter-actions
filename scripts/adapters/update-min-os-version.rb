@@ -42,6 +42,9 @@ end
 abort "Missing argument. Requires: partner version." unless ARGV.count == 1
 partner_version = ARGV[0]
 
+# Sanitize partner version string used to fetch the podspec info
+partner_version = partner_version.delete_prefix('~> ')
+
 # Obtain the min OS versions for the current adapter and the desired partner version
 partner_min_os_version = min_os_version(podspec_partner_sdk_name(), partner_version)
 current_adapter_version = podspec_min_os_version()
