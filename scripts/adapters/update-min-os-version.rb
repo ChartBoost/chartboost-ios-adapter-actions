@@ -2,12 +2,27 @@
 
 require_relative 'common'
 require 'json'
+require 'open3'
 
 # Function to obtain the min OS version info from the partner podspec
 def min_os_version(pod_name, pod_version)
+
+  # Update cocoapods repos to ensure the local info is up to date
+  `pod repo add-cdn trunk https://cdn.cocoapods.org`
+  `pod repo update`
+  
   # Use the `pod spec cat` command to get the podspec as JSON
-  podspec_json = `pod spec cat #{pod_name} --version=#{pod_version}`
-  podspec = JSON.parse(podspec_json)
+  stdout_str, stderr_str, status = Open3.capture3('pod', 'spec', 'cat', pod_name, "--version=#{pod_version}")
+  unless status.success?
+    abort "`pod spec cat` error: #{stdout_str} #{stderr_str}"
+  end
+  podspec_json = stdout_str
+
+  begin
+    podspec = JSON.parse(podspec_json)
+  rescue => error
+    abort "JSON parsing failed. Error: #{error.message}. Invalid JSON: '#{podspec_json}'"
+  end
   
   # Extract the platform information; assuming iOS here
   min_os_version = podspec['platforms']['ios']
@@ -19,6 +34,9 @@ end
 # Parse the partner version string from the arguments
 abort "Missing argument. Requires: partner version." unless ARGV.count == 1
 partner_version = ARGV[0]
+
+# Sanitize partner version string used to fetch the podspec info
+partner_version = partner_version.delete_prefix('~> ')
 
 # Obtain the min OS versions for the current adapter and the desired partner version
 partner_min_os_version = min_os_version(podspec_partner_sdk_name(), partner_version)

@@ -75,7 +75,7 @@ runs:
     # Update min OS version to match partner SDK.
     - name: Update Min OS Version
       id: min-os-version
-      run: echo "files=$(ruby ${{ github.action_path }}/../scripts/adapters/update-min-os-version.rb)" "${{ inputs.partner-version }}" >> $GITHUB_OUTPUT
+      run: echo "files=$(ruby ${{ github.action_path }}/../scripts/adapters/update-min-os-version.rb '${{ inputs.partner-version }}')" >> $GITHUB_OUTPUT
       shell: bash
 
     # Commit changes to all source files.
