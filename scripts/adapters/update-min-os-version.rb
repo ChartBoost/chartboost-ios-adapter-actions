@@ -6,11 +6,13 @@ require 'json'
 # Function to obtain the min OS version info from the partner podspec
 def min_os_version(pod_name, pod_version)
   # Update the pod repos to ensure the latest info is available
-  result = `pod repo update`
-  abort("#{result}")
+  `pod repo update`
 
   # Use the `pod spec cat` command to get the podspec as JSON
-  podspec_json = `pod spec cat #{pod_name} --version=#{pod_version}`
+  podspec_json = `pod spec cat #{pod_name} --version=#{pod_version} 2>&1` # 2>&1 captures both stdout and stderr
+  unless $?.success?  # ensures that the previous command succeeded
+    abort "`pod spec cat` failed. Error: #{podspec_json}"
+  end
   begin
     podspec = JSON.parse(podspec_json)
   rescue => error
