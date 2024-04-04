@@ -2,6 +2,7 @@
 
 require_relative 'common'
 require 'json'
+require 'open3'
 
 # Function to obtain the min OS version info from the partner podspec
 def min_os_version(pod_name, pod_version)
@@ -9,10 +10,12 @@ def min_os_version(pod_name, pod_version)
   `pod repo update`
 
   # Use the `pod spec cat` command to get the podspec as JSON
-  podspec_json = `pod spec cat #{pod_name} --version=#{pod_version} 2>&1` # 2>&1 captures both stdout and stderr
-  unless $?.success?  # ensures that the previous command succeeded
-    abort "`pod spec cat` failed. Error: #{podspec_json}"
+  stdout_str, stderr_str, status = Open3.capture3('pod', 'spec', 'cat', pod_name, "--version=#{pod_version}")
+  unless status.success?
+    abort "`pod spec cat` error: #{stdout_str} #{stderr_str}"
   end
+  podspec_json = stdout_str
+
   begin
     podspec = JSON.parse(podspec_json)
   rescue => error
