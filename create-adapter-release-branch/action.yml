@@ -72,6 +72,18 @@ runs:
       run: git add ${{ steps.copyright-headers.outputs.files }} && git commit -m "[AUTO-GENERATED] Update copyright headers"
       shell: bash
 
+    # Update min OS version to match partner SDK.
+    - name: Update Min OS Version
+      id: min-os-version
+      run: echo "files=$(ruby ${{ github.action_path }}/../scripts/adapters/update-min-os-version.rb)" "${{ inputs.partner-version }}" >> $GITHUB_OUTPUT
+      shell: bash
+
+    # Commit changes to all source files.
+    - name: Commit Changes
+      if: ${{ steps.min-os-version.outputs.files != '' }}
+      run: git add ${{ steps.min-os-version.outputs.files }} && git commit -m "[AUTO-GENERATED] Update min OS version to match partner"
+      shell: bash
+
     # Push changes.
     - name: Push Changes
       run: git push -u origin "release/${{ inputs.adapter-version }}"

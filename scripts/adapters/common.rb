@@ -6,12 +6,16 @@ PODSPEC_CB_SDK_REGEX_MEDIATION = /(spec\.dependency\s*'ChartboostMediationSDK',\
 PODSPEC_PATH_PATTERN = "*.podspec"
 PODSPEC_VERSION_REGEX = /^(\s*spec\.version\s*=\s*')([0-9]+(?>\.[0-9]+){4,5})('\s*)$/
 PODSPEC_NAME_REGEX = /^\s*spec\.name\s*=\s*'([^']+)'\s*$/
+PODSPEC_MIN_OS_VERSION_REGEX = /^(\s*spec\.ios\.deployment_target\s*=\s*')([0-9]+(?>\.[0-9]+){0,2})('\s*)$/
 PODSPEC_PARTNER_REGEX = /spec\.dependency\s*'([^']+)'/
 CHANGELOG_PATH = "CHANGELOG.md"
+CHANGELOG_ENTRY_HEADER_PREFIX = "###"
 ADAPTER_CLASS_PREFIX_MEDIATION = "ChartboostMediationAdapter"
 ADAPTER_CLASS_PREFIX_CORE = "ChartboostCoreConsentAdapter"
 ADAPTER_CLASS_VERSION_REGEX_MEDIATION = /^(\s*let adapterVersion\s*=\s*")([^"]+)(".*)$/
 ADAPTER_CLASS_VERSION_REGEX_CORE = /^(\s*(?>public)?\s*let moduleVersion\s*=\s*")([^"]+)(".*)$/
+README_PATH = "README.md"
+README_MIN_OS_VERSION_REGEX = /^(\s*\|\s*iOS\s*\|\s*)([0-9]+(?>\.[0-9]+){0,2})(\+?\s*\|\s*)$/
 SOURCE_DIR_PATH = "./Source"
 SOURCE_FILE_EXTENSIONS = ['.h', '.m', '.swift']
 
@@ -91,6 +95,20 @@ def podspec_version
   version
 end
 
+# Returns the podspec min OS version value.
+def podspec_min_os_version
+  # Obtain the podspec
+  text = read_podspec()
+
+  # Obtain the min OS version from the podspec
+  match = text.match(PODSPEC_MIN_OS_VERSION_REGEX)
+  fail unless !match.nil?
+  version = match[2]
+
+  # Return value
+  return version
+end
+
 # Returns the podspec version value.
 def podspec_name
   # Obtain the podspec
@@ -150,6 +168,11 @@ def write_changelog(text)
   File.open(CHANGELOG_PATH, "w") { |file| file.puts text }
 end
 
+# Returns the changelog entry header line for a specific version.
+def changelog_entry_header(version)
+  "#{CHANGELOG_ENTRY_HEADER_PREFIX} #{version}"
+end
+
 #################
 # ADAPTER CLASS #
 #################
@@ -193,6 +216,30 @@ def adapter_class_version
 
   # Return value
   version
+end
+
+##########
+# README #
+##########
+
+# Returns the readme file contents as a string.
+def read_readme
+  # Read the contents
+  text = File.read(readme_file_path)
+  fail unless !text.nil?
+
+  # Return value
+  text
+end
+
+# Writes a string to the readme file.
+def write_readme(text)
+  File.open(readme_file_path, "w") { |file| file.puts text }
+end
+
+# The path to the readme file.
+def readme_file_path
+  README_PATH
 end
 
 ################
