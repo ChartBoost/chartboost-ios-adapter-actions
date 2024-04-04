@@ -17,6 +17,10 @@ def min_os_version(pod_name, pod_version)
   unless status.success?
     abort "`pod setup` error: #{stdout_str} #{stderr_str}"
   end
+
+  stdout_str, stderr_str, status = Open3.capture3('pod', 'repo', 'list')
+  abort "`pod repo list` output: #{stdout_str} #{stderr_str}"
+
   stdout_str, stderr_str, status = Open3.capture3('pod', 'repo', 'update')
   unless status.success?
     abort "`pod repo update` error: #{stdout_str} #{stderr_str}"
