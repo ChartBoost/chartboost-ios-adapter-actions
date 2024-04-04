@@ -9,7 +9,7 @@ def min_os_version(pod_name, pod_version)
   # Attempt to add the trunk repo explicitly
   stdout_str, stderr_str, status = Open3.capture3('pod', 'repo', 'add', 'trunk', 'https://github.com/CocoaPods/Specs.git')
   unless status.success?
-    puts "`pod repo add trunk` error: #{stdout_str} #{stderr_str}"
+    abort "`pod repo add trunk` error: #{stdout_str} #{stderr_str}"
   end
 
   # Update the pod repos to ensure the latest info is available
