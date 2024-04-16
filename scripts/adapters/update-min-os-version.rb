@@ -13,7 +13,7 @@ def min_os_version(pod_name, pod_version)
 
   # Update cocoapods repos to ensure the local info is up to date
   `pod repo add-cdn trunk https://cdn.cocoapods.org`
-  `pod repo update`
+  # `pod repo update`
   
   # Use the `pod spec cat` command to get the podspec as JSON
   stdout_str, stderr_str, status = Open3.capture3('pod', 'spec', 'cat', pod_name, "--version=#{pod_version}")
@@ -53,7 +53,7 @@ new_min_os_version = [sdk_min_os_version, partner_min_os_version].max
 # Keep a list of modified files to output at the end
 modified_files = []
 
-# Update adapter files with the new min OS version if it's greater than the current version.
+# Update adapter files with the new min OS version if it's different from the current one.
 if new_min_os_version != current_adapter_version
   # Read the podspec file
   podspec = read_podspec()
