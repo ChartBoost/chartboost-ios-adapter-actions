@@ -4,6 +4,16 @@ require_relative 'common'
 require 'json'
 require 'open3'
 
+def sdk_min_os_version
+  platform = ENV['CHARTBOOST_PLATFORM']
+  if platform == 'Core'
+    return '11.0'
+  else
+    # fallback to 'Mediation'
+    return '13.0'
+  end
+end
+
 # Function to obtain the min OS version info from the partner podspec
 def min_os_version(pod_name, pod_version)
 
@@ -45,8 +55,10 @@ current_adapter_version = podspec_min_os_version()
 # Keep a list of modified files to output at the end
 modified_files = []
 
-# Update adapter files with the new min OS version based on the partner if it's different from the current one.
-if partner_min_os_version != current_adapter_version
+# Update adapter files with the new min OS version if it's greater than the current version.
+# Always choose the max of `sdk_min_os_version` and `partner_min_os_version`, so that we never
+# downgrade below the `sdk_min_os_version`.
+if max(sdk_min_os_version, partner_min_os_version) > current_adapter_version
   # Read the podspec file
   podspec = read_podspec()
   # Replace the min OS version string (capture group 2), keeping everything else the same (capture groups 1 and 3)
