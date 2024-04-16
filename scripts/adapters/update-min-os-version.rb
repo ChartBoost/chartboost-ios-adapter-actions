@@ -44,7 +44,7 @@ partner_version = partner_version.delete_prefix('~> ')
 
 # Obtain the min OS versions for the current adapter and the desired partner version
 # Convert to `Gem::Version`, otherwise the string '2.0' is greater than '11.0'.
-partner_min_os_version = Gem::Version.new(in_os_version(podspec_partner_sdk_name(), partner_version))
+partner_min_os_version = Gem::Version.new(min_os_version(podspec_partner_sdk_name(), partner_version))
 current_adapter_version = Gem::Version.new(podspec_min_os_version())
 # Always choose the max of `sdk_min_os_version` and `partner_min_os_version`, so that we never
 # downgrade below the `sdk_min_os_version`.
