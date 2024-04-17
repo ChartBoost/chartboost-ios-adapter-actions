@@ -5,7 +5,23 @@ require 'json'
 require 'open3'
 
 def sdk_min_os_version
-  return Gem::Version.new('13.0')
+  # The version returned by `podspec_cb_sdk_version` contains a trailing quote.
+  version = podspec_cb_sdk_version[...-1]
+  # Pad the version until we have three digits, since the version must match exactly in order
+  # for CocoaPods to find it.
+  components = Array.new(version.split("."))
+  while components.count < 3
+    components.append(0)
+  end
+  version = components.join('.')
+  platform = ENV['CHARTBOOST_PLATFORM']
+  if platform == 'Core'
+    sdk_name = "ChartboostCoreSDK"
+  else
+    sdk_name = "ChartboostMediationSDK"
+  end
+  result = min_os_version(sdk_name, version)
+  return Gem::Version.new(result)
 end
 
 # Function to obtain the min OS version info from the partner podspec
