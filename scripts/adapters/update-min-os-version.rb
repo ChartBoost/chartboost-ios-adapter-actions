@@ -13,7 +13,7 @@ def min_os_version(pod_name, pod_version)
 
   # Update cocoapods repos to ensure the local info is up to date
   `pod repo add-cdn trunk https://cdn.cocoapods.org`
-  # `pod repo update`
+  `pod repo update`
   
   # Use the `pod spec cat` command to get the podspec as JSON
   stdout_str, stderr_str, status = Open3.capture3('pod', 'spec', 'cat', pod_name, "--version=#{pod_version}")
