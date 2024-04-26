@@ -198,7 +198,7 @@ def adapter_class_file_path
   partner_name = podspec_name.delete_prefix ADAPTER_CLASS_PREFIX()
 
   # Obtain the Adapter file path
-  path = Dir.glob("#{SOURCE_DIR_PATH}/#{partner_name}Adapter.swift").first
+  path = Dir.glob("#{SOURCE_DIR_PATH}/#{partner_name}AdapterConfiguration.swift").first
   fail unless !path.nil?
 
   # Return value
